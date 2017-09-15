@@ -17,14 +17,28 @@ class Node {
 
     if (value < this.value) {
       // left node
-      if (action === this.consts.INSERT && !this.left) return this.left = new Node(value);
-      if (action === this.consts.DELETE && this.left && this.left.value === value) return this.left = null;
+      if (action === this.consts.INSERT && !this.left) {
+        this.left = new Node(value);
+        return this;
+      }
+
+      if (action === this.consts.DELETE && this.left && this.left.value === value) {
+        this.left = null;
+        return this;
+      }
 
       return this.left.findAnd(action, value);
     } else {
       // right node
-      if (!this.right && action === this.consts.INSERT) return this.right = new Node(value);
-      if (action === this.consts.DELETE && this.right && this.right.value === value) return this.right = null;
+      if (!this.right && action === this.consts.INSERT) {
+        this.right = new Node(value);
+        return this;
+      }
+
+      if (action === this.consts.DELETE && this.right && this.right.value === value) {
+        this.right = null;
+        return this;
+      }
 
       return this.right.findAnd(action, value);
     }
