@@ -67,6 +67,13 @@ class Node {
     return false;
   }
 
+  size(count = 1) {
+    const leftSize = this.left ? this.left.size() : 0;
+    const rightSize = this.right ? this.right.size() : 0;
+
+    return count + leftSize + rightSize;
+  }
+
   depthFirstLog(callback) {
     callback.call(this);
     if (this.left) this.left.depthFirstLog(callback);

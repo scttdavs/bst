@@ -44,4 +44,13 @@ describe("BST", () => {
       assert.equal(node.contains(1), false);
     });
   });
+
+  describe("Size", () => {
+    it("should return the count of all nodes in the tree", () => {
+      const node = new Node(5);
+      node.insert(10).insert(1).insert(6).insert(53).insert(87);
+
+      assert.equal(node.size(), 6);
+    });
+  });
 });
