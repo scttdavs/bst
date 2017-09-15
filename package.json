@@ -2,7 +2,7 @@
   "name": "bst",
   "version": "0.0.1",
   "description": "Binary Search Tree in Javascript",
-  "main": "bst.js",
+  "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
   },

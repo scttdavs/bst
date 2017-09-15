@@ -1,7 +1,7 @@
 "use strict";
 
 const assert = require("assert");
-const Node = require("../bst");
+const Node = require("../");
 
 describe("BST", () => {
   describe("Contains", () => {
