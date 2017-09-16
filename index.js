@@ -76,6 +76,14 @@ class Node {
     return null;
   }
 
+  getLargestNode(currentLargest = new Node(0)) {
+    currentLargest = currentLargest.value > this.value ? currentLargest : this;
+    const left = this.left ? this.left.getLargestNode(currentLargest) : currentLargest;
+    const right = this.right ? this.right.getLargestNode(currentLargest) : currentLargest;
+
+    return left.value > right.value ? left : right;
+  }
+
   contains(value) {
     if (this.value === value) return true;
 
