@@ -72,6 +72,32 @@ describe("BST", () => {
       assert.equal(node.contains(6), true);
     });
 
+    it("should delete the root in the tree (with two children)", () => {
+      const node = new Node(8);
+      node.insert(3).insert(9).insert(1).insert(5).insert(12).insert(4).insert(11);
+      //        8
+      //      /   \
+      //    3      9
+      //  /   \     \
+      // 1     5    12
+      //      /     /
+      //     4     11
+
+      assert.equal(node.contains(8), true);
+
+      node.delete(8);
+      //        5
+      //      /   \
+      //    3      9
+      //  /   \     \
+      // 1     4    12
+      //            /
+      //           11
+
+      assert.equal(node.contains(8), false);
+      assert.equal(node.contains(6), true);
+    });
+
     it("should delete the value anywhere in the tree (with two children)", () => {
       const node = new Node(5);
       node.insert(10).insert(1).insert(6).insert(12);

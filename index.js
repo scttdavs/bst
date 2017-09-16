@@ -37,6 +37,7 @@ class Node {
           // has at least one child
           if (this.left.left && this.left.right) {
             // has two children (damn)
+            // swap out node with largest from left subtree (or smallest from right)
           } else {
             // has only one child, so bypass it
             const newNode = this.left.left || this.left.right;
@@ -57,6 +58,7 @@ class Node {
           // has at least one child
           if (this.right.left && this.right.right) {
             // has two children (damn)
+            // swap out node with largest from left subtree (or smallest from right)
           } else {
             // has only one child, so bypass it
             const newNode = this.right.left || this.right.right;
