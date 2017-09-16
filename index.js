@@ -5,53 +5,73 @@ class Node {
     this.right = null;
     this.left = null;
     this.value = value;
-
-    this.consts = {
-      INSERT: "insert",
-      DELETE: "delete"
-    }
   }
 
-  findAnd(action, value) {
-    // if (action === this.consts.DELETE && this.value === value) return delete this;
-
+  insert(value) {
     if (value < this.value) {
       // left node
-      if (action === this.consts.INSERT && !this.left) {
+      if (!this.left) {
         this.left = new Node(value);
         return this;
       }
 
-      if (action === this.consts.DELETE && this.left && this.left.value === value) {
-        this.left = null;
-        return this;
-      }
-
-      return this.left.findAnd(action, value);
+      return this.left.insert(value);
     } else {
       // right node
-      if (!this.right && action === this.consts.INSERT) {
+      if (!this.right) {
         this.right = new Node(value);
         return this;
       }
 
-      if (action === this.consts.DELETE && this.right && this.right.value === value) {
-        this.right = null;
-        return this;
-      }
-
-      return this.right.findAnd(action, value);
+      return this.right.insert(value);
     }
 
     return null;
   }
 
-  insert(value) {
-    return this.findAnd(this.consts.INSERT, value);
-  }
-
   delete(value) {
-    return this.findAnd(this.consts.DELETE, value);
+    if (value < this.value) {
+      // left node
+      if (this.left.value === value) {
+        if (this.left.left || this.left.right) {
+          // has at least one child
+          if (this.left.left && this.left.right) {
+            // has two children (damn)
+          } else {
+            // has only one child, so bypass it
+            const newNode = this.left.left || this.left.right;
+            this.left = newNode;
+          }
+        } else {
+          // no children so just delete it
+          this.left = null;
+        }
+        return this;
+      }
+
+      return this.left.delete(value);
+    } else {
+      // right node
+      if (this.right.value === value) {
+        if (this.right.left || this.right.right) {
+          // has at least one child
+          if (this.right.left && this.right.right) {
+            // has two children (damn)
+          } else {
+            // has only one child, so bypass it
+            const newNode = this.right.left || this.right.right;
+            this.right = newNode;
+          }
+        } else {
+          this.right = null;
+        }
+        return this;
+      }
+
+      return this.right.delete(value);
+    }
+
+    return null;
   }
 
   contains(value) {
@@ -76,7 +96,8 @@ class Node {
 
   height(currentHeight = 0) {
     currentHeight++;
-    return Math.max(this.left ? this.left.height(currentHeight) : currentHeight, this.right ? this.right.height(currentHeight) : currentHeight);
+    return Math.max(this.left ? this.left.height(currentHeight) : currentHeight,
+                    this.right ? this.right.height(currentHeight) : currentHeight);
   }
 
   depthFirstLog(callback) {

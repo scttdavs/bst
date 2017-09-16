@@ -33,15 +33,65 @@ describe("BST", () => {
   });
 
   describe("Delete", () => {
-    it("should delete the value anywhere in the tree", () => {
+    it("should delete the value anywhere in the tree (with no children)", () => {
       const node = new Node(5);
-      node.insert(10).insert(1);
+      node.insert(10).insert(1).insert(6);
+      //        5
+      //      /   \
+      //    1      10
+      //          /
+      //         6
 
-      assert.equal(node.contains(1), true);
+      assert.equal(node.contains(6), true);
 
-      node.delete(1);
+      node.delete(6);
+      //        5
+      //      /   \
+      //    1      10
 
-      assert.equal(node.contains(1), false);
+      assert.equal(node.contains(6), false);
+    });
+
+    it("should delete the value anywhere in the tree (with one child)", () => {
+      const node = new Node(5);
+      node.insert(10).insert(1).insert(6);
+      //        5
+      //      /   \
+      //    1      10
+      //          /
+      //         6
+
+      assert.equal(node.contains(10), true);
+
+      node.delete(10);
+      //        5
+      //      /   \
+      //    1      6
+
+      assert.equal(node.contains(10), false);
+      assert.equal(node.contains(6), true);
+    });
+
+    it("should delete the value anywhere in the tree (with two children)", () => {
+      const node = new Node(5);
+      node.insert(10).insert(1).insert(6).insert(12);
+      //        5
+      //      /   \
+      //    1      10
+      //          /  \
+      //         6    12
+
+      assert.equal(node.contains(10), true);
+
+      node.delete(10);
+      //        5
+      //      /   \
+      //    1      6
+      //            \
+      //            12
+
+      assert.equal(node.contains(10), false);
+      assert.equal(node.contains(6), true);
     });
   });
 
