@@ -74,6 +74,11 @@ class Node {
     return count + leftSize + rightSize;
   }
 
+  height(currentHeight = 0) {
+    currentHeight++;
+    return Math.max(this.left ? this.left.height(currentHeight) : currentHeight, this.right ? this.right.height(currentHeight) : currentHeight);
+  }
+
   depthFirstLog(callback) {
     callback.call(this);
     if (this.left) this.left.depthFirstLog(callback);

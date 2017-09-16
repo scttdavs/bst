@@ -53,4 +53,20 @@ describe("BST", () => {
       assert.equal(node.size(), 6);
     });
   });
+
+  describe("Height", () => {
+    it("should return the distance from a node to the root node", () => {
+      const node = new Node(5);
+      node.insert(10).insert(1).insert(16).insert(53).insert(12);
+      //        5
+      //      /   \
+      //    1      10
+      //          / \
+      //        16  53
+      //            /
+      //          12
+
+      assert.equal(node.height(), 4);
+    });
+  });
 });
