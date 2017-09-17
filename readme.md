@@ -1,5 +1,5 @@
 # Binary Search Tree (in Javascript)
-[![Build Status](https://travis-ci.org/scttdavs/bst.svg)](https://travis-ci.org/scttdavs/bst)
+[![Build Status](https://travis-ci.org/scttdavs/bst.svg)](https://travis-ci.org/scttdavs/bst) [![Coverage Status](https://coveralls.io/repos/github/scttdavs/bst/badge.svg?branch=master)](https://coveralls.io/github/scttdavs/bst?branch=master)
 
 ## Usage
 
