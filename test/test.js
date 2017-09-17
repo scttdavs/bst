@@ -169,6 +169,48 @@ describe("BST", () => {
       assert.equal(node.contains(6), true);
       assert.equal(node.size(), 4);
     });
+
+    it("should delete simply with one child from root node", () => {
+      const node = new Node(5);
+      node.insert(10);
+      //        5
+      //          \
+      //           10
+
+      assert.equal(node.size(), 2);
+
+      node.delete(5);
+
+      assert.equal(node.size(), 1);
+      assert.equal(node.value, 10);
+    });
+
+    it("should delete with two children from root node", () => {
+      const node = new Node(5);
+      node.insert(10).insert(3);
+      //        5
+      //       / \
+      //     3    10
+
+      assert.equal(node.size(), 3);
+
+      node.delete(5);
+
+      assert.equal(node.size(), 2);
+      assert.equal(node.value, 3);
+      assert.equal(node.right.value, 10);
+    });
+
+    it("should delete the root node by itself", () => {
+      const node = new Node(5);
+
+      assert.equal(node.size(), 1);
+
+      node.delete(5);
+
+      assert.equal(node.size(), 1);
+      assert.equal(node.value, null);
+    });
   });
 
   describe("Size", () => {
