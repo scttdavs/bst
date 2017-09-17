@@ -68,3 +68,7 @@ tree.depthFirstLog(function() {
   // 5, 10, 1, 8, 7
 });
 ```
+
+## TODO
+
+- Add a comparitor feature
