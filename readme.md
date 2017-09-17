@@ -55,6 +55,16 @@ tree.delete(10);
 //         7
 ```
 
+### isBalanced
+Returns true if the height of the left and right subtrees have a difference of 1 or less.
+```js
+const tree = new Node(5);
+tree.insert(10).insert(1).insert(0).insert(9).insert(53).insert(12);
+
+tree.isBalanced();
+// true
+```
+
 ### height
 Returns the height of a given tree or subtree.
 ```js

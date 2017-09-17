@@ -275,6 +275,36 @@ describe("BST", () => {
     });
   });
 
+  describe("isBalanced", () => {
+    it("should return false if the tree's height on the left and right is equal or off by only 1", () => {
+      const node = new Node(5);
+      node.insert(10).insert(1).insert(9).insert(53).insert(12);
+      //        5
+      //      /   \
+      //    1      10
+      //          / \
+      //        9   53
+      //            /
+      //          12
+
+      assert.equal(node.isBalanced(), false);
+    });
+
+    it("should return true if the tree's height on the left and right is equal or off by only 1", () => {
+      const node = new Node(5);
+      node.insert(10).insert(1).insert(0).insert(9).insert(53).insert(12);
+      //        5
+      //      /   \
+      //    1      10
+      //  /       / \
+      // 0      9   53
+      //            /
+      //          12
+
+      assert.equal(node.isBalanced(), true);
+    });
+  });
+
   describe("depthFirstLog", () => {
     it("should log over each node in the tree", () => {
       const loggedValues = [];

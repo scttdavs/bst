@@ -11,30 +11,31 @@ class Node {
     this.value = value;
   }
 
-  insert(value) {
+  insert(value, root = this) {
+    console.log("VAL", value, this.value);
     if (this.compare(value, this.value) < 0) {
       // left node
       if (!this.left) {
         this.left = new Node(value, this.compare);
-        return this;
+        return root;
       }
 
-      return this.left.insert(value);
+      return this.left.insert(value, root);
     } else if (this.compare(value, this.value) > 0) {
       // right node
       if (!this.right) {
         this.right = new Node(value, this.compare);
-        return this;
+        return root;
       }
 
-      return this.right.insert(value);
+      return this.right.insert(value, root);
     }
 
     // the value is equal, so do nothing
     return null;
   }
 
-  delete(value) {
+  delete(value, root = this) {
     if (this.compare(value, this.value) === 0) {
       // current node
       if (this.left || this.right) {
@@ -56,17 +57,17 @@ class Node {
         this.value = null;
         // throw Error("This is the only node, it can't delete itself!");
       }
-      return this;
+      return root;
     } else if (this.compare(value, this.value) < 0) {
       // left node
-      return this.deleteFromBranch("left", value);
+      return this.deleteFromBranch("left", value, root);
     } else {
       // right node
-      return this.deleteFromBranch("right", value);
+      return this.deleteFromBranch("right", value, root);
     }
   }
 
-  deleteFromBranch(branch, value) {
+  deleteFromBranch(branch, value, root = this) {
     if (this.compare(this[branch].value, value) === 0) {
       if (this[branch].left || this[branch].right) {
         // has at least one child
@@ -81,10 +82,10 @@ class Node {
         // no children so just delete it
         this[branch] = null;
       }
-      return this;
+      return root;
     }
 
-    return this[branch].delete(value);
+    return this[branch].delete(value, root);
   }
 
   // swap out node with largest from left subtree (or smallest from right)
@@ -112,6 +113,12 @@ class Node {
 
   getSmallestNodeParent(currentSmallest = this) {
     return this.left ? this.left.getSmallestNodeParent(this) : currentSmallest;
+  }
+
+  isBalanced() {
+    console.log(this.left.height());
+    console.log(this.right.height());
+    return Math.abs(this.left.height() - this.right.height()) <= 1;
   }
 
   contains(value) {
