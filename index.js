@@ -48,8 +48,8 @@ class Node {
           }
         }
       } else {
-        // TODO fix this
-        throw Error("This is the only node, it can't delete itself!");
+        this.value = null;
+        // throw Error("This is the only node, it can't delete itself!");
       }
       return this;
     } else if (value < this.value) {
