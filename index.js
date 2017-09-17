@@ -54,46 +54,34 @@ class Node {
       return this;
     } else if (value < this.value) {
       // left node
-      if (this.left.value === value) {
-        if (this.left.left || this.left.right) {
-          // has at least one child
-          if (this.left.left && this.left.right) {
-            // has two children (damn)
-            this.deleteWithTwoChildren(this.left);
-          } else {
-            // has only one child, so bypass it
-            this.left = this.left.left || this.left.right;
-          }
-        } else {
-          // no children so just delete it
-          this.left = null;
-        }
-        return this;
-      }
-
-      return this.left.delete(value);
+      return this.deleteFromBranch("left", value);
     } else {
       // right node
-      if (this.right.value === value) {
-        if (this.right.left || this.right.right) {
-          // has at least one child
-          if (this.right.left && this.right.right) {
-            // has two children (damn)
-            this.deleteWithTwoChildren(this.right);
-          } else {
-            // has only one child, so bypass it
-            this.right = this.right.left || this.right.right;
-          }
-        } else {
-          this.right = null;
-        }
-        return this;
-      }
-
-      return this.right.delete(value);
+      return this.deleteFromBranch("right", value);
     }
 
     return null;
+  }
+
+  deleteFromBranch(branch, value) {
+    if (this[branch].value === value) {
+      if (this[branch].left || this[branch].right) {
+        // has at least one child
+        if (this[branch].left && this[branch].right) {
+          // has two children (damn)
+          this.deleteWithTwoChildren(this[branch]);
+        } else {
+          // has only one child, so bypass it
+          this[branch] = this[branch].left || this[branch].right;
+        }
+      } else {
+        // no children so just delete it
+        this[branch] = null;
+      }
+      return this;
+    }
+
+    return this[branch].delete(value);
   }
 
   // swap out node with largest from left subtree (or smallest from right)
