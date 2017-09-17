@@ -60,9 +60,9 @@ const tree = new Node(5).insert(10).insert(1).insert(8).insert(7).contains(10);
 ```
 
 ### depthFirstLog
-Will execute a callback with each node's context bound to "this".
+Will execute a callback with each node's context bound to `this`.
 ```js
-const tree = new Node(5).insert(10).insert(1).insert(8).insert(7).height();
+const tree = new Node(5).insert(10).insert(1).insert(8).insert(7);
 tree.depthFirstLog(function() {
   console.log(this.value)
   // 5, 10, 1, 8, 7
