@@ -30,7 +30,50 @@ class Node {
   }
 
   delete(value) {
-    if (value < this.value) {
+    console.log(value);
+    if (this.value === value) {
+      // current node
+      if (this.left || this.right) {
+        // has at least one child
+        if (this.left && this.right) {
+          // has two children (damn)
+          // swap out node with largest from left subtree (or smallest from right)
+          this.deleteWithTwoChildren();
+        } else {
+          // has only one child, so bypass it
+          if (this.right) {
+            // swap with smallest from right
+            const smallestNodeParent = this.getSmallestNodeParent();
+            if (smallestNodeParent.left === null) {
+              // no other children so just swap left node
+              this.value = this.left.value;
+              this.left = null;
+            } else {
+              this.value = smallestNodeParent.left.value;
+
+              // delete the largest node
+              smallestNodeParent.left = smallestNodeParent.left.right; // this will never be .left.left
+            }
+          } else {
+            // swap with largest from the left
+            const largestNodeParent = this.getLargestNodeParent();
+            if (largestNodeParent.right === null) {
+              // no other children so just swap left node
+              this.value = this.right.value;
+              this.right = null;
+            } else {
+              this.value = largestNodeParent.right.value;
+
+              // delete the largest node
+              largestNodeParent.right = largestNodeParent.right.left; // this will never be .right.right
+            }
+          }
+        }
+      } else {
+        throw Error("This is the only node, it can't delete itself!");
+      }
+      return this;
+    } else if (value < this.value) {
       // left node
       if (this.left.value === value) {
         if (this.left.left || this.left.right) {
@@ -38,6 +81,7 @@ class Node {
           if (this.left.left && this.left.right) {
             // has two children (damn)
             // swap out node with largest from left subtree (or smallest from right)
+            this.deleteWithTwoChildren(this.left);
           } else {
             // has only one child, so bypass it
             const newNode = this.left.left || this.left.right;
@@ -59,6 +103,7 @@ class Node {
           if (this.right.left && this.right.right) {
             // has two children (damn)
             // swap out node with largest from left subtree (or smallest from right)
+            this.deleteWithTwoChildren(this.right);
           } else {
             // has only one child, so bypass it
             const newNode = this.right.left || this.right.right;
@@ -76,12 +121,25 @@ class Node {
     return null;
   }
 
-  getLargestNode(currentLargest = new Node(0)) {
-    currentLargest = currentLargest.value > this.value ? currentLargest : this;
-    const left = this.left ? this.left.getLargestNode(currentLargest) : currentLargest;
-    const right = this.right ? this.right.getLargestNode(currentLargest) : currentLargest;
+  deleteWithTwoChildren(root = this) {
+    const largestNodeParent = root.left.getLargestNodeParent();
+    if (largestNodeParent.right === null) {
+      root.value = largestNodeParent.value;
+      root.left = null;
+    } else {
+      root.value = largestNodeParent.right.value;
 
-    return left.value > right.value ? left : right;
+      // delete the largest node
+      largestNodeParent.right = largestNodeParent.right.left; // this will never be .right.right
+    }
+  }
+
+  getLargestNodeParent(currentLargest = this) {
+    return this.right ? this.right.getLargestNodeParent(this) : currentLargest;
+  }
+
+  getSmallestNodeParent(currentSmallest = this) {
+    return this.left ? this.left.getSmallestNodeParent(this) : currentSmallest;
   }
 
   contains(value) {

@@ -52,7 +52,7 @@ describe("BST", () => {
       assert.equal(node.contains(6), false);
     });
 
-    it("should get the largest node", () => {
+    it("should get the parent of the largest node", () => {
       const node = new Node(8);
       node.insert(3).insert(9).insert(1).insert(5).insert(12).insert(4).insert(11);
       //        8
@@ -63,7 +63,7 @@ describe("BST", () => {
       //      /     /
       //     4     11
 
-      assert(node.getLargestNode().value, 12);
+      assert(node.getLargestNodeParent().right.value, 12);
     });
 
     it("should delete the value anywhere in the tree (with one child)", () => {
@@ -97,6 +97,7 @@ describe("BST", () => {
       //      /     /
       //     4     11
 
+      assert.equal(node.size(), 8);
       assert.equal(node.contains(8), true);
 
       node.delete(8);
@@ -109,7 +110,8 @@ describe("BST", () => {
       //           11
 
       assert.equal(node.contains(8), false);
-      assert.equal(node.contains(6), true);
+      assert.equal(node.contains(3), true);
+      assert.equal(node.size(), 7);
     });
 
     it("should delete the value anywhere in the tree (with two children)", () => {
@@ -122,6 +124,7 @@ describe("BST", () => {
       //         6    12
 
       assert.equal(node.contains(10), true);
+      assert.equal(node.size(), 5);
 
       node.delete(10);
       //        5
@@ -132,6 +135,7 @@ describe("BST", () => {
 
       assert.equal(node.contains(10), false);
       assert.equal(node.contains(6), true);
+      assert.equal(node.size(), 4);
     });
   });
 
