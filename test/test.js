@@ -30,6 +30,18 @@ describe("BST", () => {
       assert.equal(node.left.value, 1);
       assert.equal(node.right.value, 10);
     });
+
+    it("should not insert a duplicate value", () => {
+      const node = new Node(5);
+      node.insert(10).insert(1);
+
+      assert.equal(node.contains(10), true);
+      assert.equal(node.size(), 3);
+
+      node.insert(10);
+
+      assert.equal(node.size(), 3);
+    });
   });
 
   describe("Delete", () => {

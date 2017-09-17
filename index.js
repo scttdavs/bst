@@ -20,7 +20,7 @@ class Node {
       }
 
       return this.left.insert(value);
-    } else {
+    } else if (this.compare(value, this.value) > 0) {
       // right node
       if (!this.right) {
         this.right = new Node(value, this.compare);
@@ -30,6 +30,7 @@ class Node {
       return this.right.insert(value);
     }
 
+    // the value is equal, so do nothing
     return null;
   }
 
