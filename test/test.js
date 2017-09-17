@@ -183,4 +183,25 @@ describe("BST", () => {
       assert.equal(node.height(), 4);
     });
   });
+
+  describe("comparator", () => {
+    it("should work with a custom comparator", () => {
+      const node = new Node("f", (x, y) => {
+        if (x < y) return -1;
+        if (x > y) return 1;
+        return 0;
+      });
+
+      node.insert("b").insert("p").insert("l").insert("z");
+      //      f
+      //    /  \
+      //  b     p
+      //      /  \
+      //    l     z
+
+      assert.equal(node.left.value, "b");
+      assert.equal(node.right.right.value, "z");
+      assert.equal(node.right.left.value, "l");
+    });
+  });
 });

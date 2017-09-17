@@ -8,6 +8,22 @@ const Node = require("bst"); // not yet published to npm
 const tree = new Node(5);
 ```
 
+The above will assume that the value of each node is a number. If you would like to store other forms of data, you will need to use your own comparator so that the tree can properly be sorted:
+```js
+const tree = new Node("f", (x, y) => {
+  if (x < y) return -1;
+  if (x > y) return 1;
+  return 0;
+});
+
+tree.insert("b").insert("p").insert("l").insert("z");
+//      f
+//    /  \
+//  b     p
+//      /  \
+//    l     z
+```
+
 ## Methods
 
 ### insert
@@ -68,7 +84,3 @@ tree.depthFirstLog(function() {
   // 5, 10, 1, 8, 7
 });
 ```
-
-## TODO
-
-- Add a comparitor feature

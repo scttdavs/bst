@@ -1,11 +1,11 @@
 "use strict";
 
-const defaultComparitor = (x, y) => x - y;
+const defaultComparator = (x, y) => x - y;
 
 class Node {
   constructor(value = null,
-              comparitor = defaultComparitor) {
-    this.compare = comparitor;
+              comparator = defaultComparator) {
+    this.compare = comparator;
     this.right = null;
     this.left = null;
     this.value = value;
@@ -15,7 +15,7 @@ class Node {
     if (this.compare(value, this.value) < 0) {
       // left node
       if (!this.left) {
-        this.left = new Node(value);
+        this.left = new Node(value, this.compare);
         return this;
       }
 
@@ -23,7 +23,7 @@ class Node {
     } else {
       // right node
       if (!this.right) {
-        this.right = new Node(value);
+        this.right = new Node(value, this.compare);
         return this;
       }
 
