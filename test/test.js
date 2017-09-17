@@ -183,12 +183,12 @@ describe("BST", () => {
   describe("Height", () => {
     it("should return the distance from a node to the root node", () => {
       const node = new Node(5);
-      node.insert(10).insert(1).insert(16).insert(53).insert(12);
+      node.insert(10).insert(1).insert(9).insert(53).insert(12);
       //        5
       //      /   \
       //    1      10
       //          / \
-      //        16  53
+      //        9   53
       //            /
       //          12
 
@@ -230,6 +230,26 @@ describe("BST", () => {
       assert.equal(node.right.value.value, 8);
       assert.equal(node.right.left.value.value, 7);
       assert.equal(node.right.right.value.value, 9);
+    });
+  });
+
+  describe("depthFirstLog", () => {
+    it("should log over each node in the tree", () => {
+      const loggedValues = [];
+      const node = new Node(5);
+      node.insert(10).insert(1).insert(9).insert(53).insert(12);
+      //        5
+      //      /   \
+      //    1      10
+      //          / \
+      //        9   53
+      //            /
+      //          12
+
+      node.depthFirstLog(function() {
+        loggedValues.push(this.value);
+      });
+      assert.deepEqual(loggedValues, [5, 1, 10, 9, 53, 12]);
     });
   });
 });
