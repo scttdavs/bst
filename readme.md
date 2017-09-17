@@ -68,21 +68,27 @@ tree.isBalanced();
 ### height
 Returns the height of a given tree or subtree.
 ```js
-const tree = new Node(5).insert(10).insert(1).insert(8).insert(7).height();
+const tree = new Node(5).insert(10).insert(1).insert(8).insert(7);
+
+tree.height();
 // 4
 ```
 
 ### size
 Returns the total number of nodes in a tree or subtree.
 ```js
-const tree = new Node(5).insert(10).insert(1).insert(8).insert(7).size();
+const tree = new Node(5).insert(10).insert(1).insert(8).insert(7);
+
+tree.size();
 // 5
 ```
 
 ### contains
 Returns true if a tree/subtree contains the passed value.
 ```js
-const tree = new Node(5).insert(10).insert(1).insert(8).insert(7).contains(10);
+const tree = new Node(5).insert(10).insert(1).insert(8).insert(7);
+
+tree.contains(10);
 // true
 ```
 
@@ -90,6 +96,7 @@ const tree = new Node(5).insert(10).insert(1).insert(8).insert(7).contains(10);
 Will execute a callback with each node's context bound to `this`.
 ```js
 const tree = new Node(5).insert(10).insert(1).insert(8).insert(7);
+
 tree.depthFirstLog(function() {
   console.log(this.value);
   // 5, 10, 1, 8, 7
