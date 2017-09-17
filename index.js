@@ -64,8 +64,6 @@ class Node {
       // right node
       return this.deleteFromBranch("right", value);
     }
-
-    return null;
   }
 
   deleteFromBranch(branch, value) {
