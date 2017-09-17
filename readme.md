@@ -1,4 +1,5 @@
 # Binary Search Tree (in Javascript)
+[![Build Status](https://travis-ci.org/scttdavs/bst.svg)](https://travis-ci.org/scttdavs/bst)
 
 ## Usage
 
