@@ -12,7 +12,6 @@ class Node {
   }
 
   insert(value, root = this) {
-    console.log("VAL", value, this.value);
     if (this.compare(value, this.value) < 0) {
       // left node
       if (!this.left) {
@@ -116,8 +115,6 @@ class Node {
   }
 
   isBalanced() {
-    console.log(this.left.height());
-    console.log(this.right.height());
     return Math.abs(this.left.height() - this.right.height()) <= 1;
   }
 
