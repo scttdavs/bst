@@ -91,13 +91,15 @@ class Node {
                         getNodeParent = side === "left" ? "getLargestNodeParent" : "getSmallestNodeParent") {
     const nodeParent = root[side][getNodeParent]();
     if (nodeParent[otherSide] === null) {
+      // did not contain a larger or smaller child, so swap with the parent instead
       root.value = nodeParent.value;
+      // then delete it
       root[side] = null;
     } else {
       root.value = nodeParent[otherSide].value;
 
       // delete the largest node
-      nodeParent[otherSide] = nodeParent[otherSide][side]; // this will never be .right.right
+      nodeParent[otherSide] = nodeParent[otherSide][side];
     }
   }
 
