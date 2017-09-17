@@ -1,14 +1,18 @@
 "use strict";
 
+const defaultComparitor = (x, y) => x - y;
+
 class Node {
-  constructor(value = null) {
+  constructor(value = null,
+              comparitor = defaultComparitor) {
+    this.compare = comparitor;
     this.right = null;
     this.left = null;
     this.value = value;
   }
 
   insert(value) {
-    if (value < this.value) {
+    if (this.compare(value, this.value) < 0) {
       // left node
       if (!this.left) {
         this.left = new Node(value);
@@ -30,7 +34,7 @@ class Node {
   }
 
   delete(value) {
-    if (this.value === value) {
+    if (this.compare(value, this.value) === 0) {
       // current node
       if (this.left || this.right) {
         // has at least one child
@@ -52,7 +56,7 @@ class Node {
         // throw Error("This is the only node, it can't delete itself!");
       }
       return this;
-    } else if (value < this.value) {
+    } else if (this.compare(value, this.value) < 0) {
       // left node
       return this.deleteFromBranch("left", value);
     } else {
@@ -64,7 +68,7 @@ class Node {
   }
 
   deleteFromBranch(branch, value) {
-    if (this[branch].value === value) {
+    if (this.compare(this[branch].value, value) === 0) {
       if (this[branch].left || this[branch].right) {
         // has at least one child
         if (this[branch].left && this[branch].right) {
@@ -112,13 +116,13 @@ class Node {
   }
 
   contains(value) {
-    if (this.value === value) return true;
+    if (this.compare(this.value, value) === 0) return true;
 
     // try left node
-    if (value < this.value && this.left) return this.left.contains(value);
+    if (this.compare(value, this.value) < 0 && this.left) return this.left.contains(value);
 
     // try right node
-    if (value > this.value && this.right) return this.right.contains(value);
+    if (this.compare(value, this.value) > 0 && this.right) return this.right.contains(value);
 
     // no matches
     return false;
