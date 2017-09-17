@@ -203,5 +203,21 @@ describe("BST", () => {
       assert.equal(node.right.right.value, "z");
       assert.equal(node.right.left.value, "l");
     });
+
+    it("should work with another custom comparator", () => {
+      const node = new Node({value: 5}, (x, y) => x.value - y.value);
+
+      node.insert({value: 1}).insert({value: 8}).insert({value: 7}).insert({value: 9});
+      //      5
+      //    /  \
+      //  1     8
+      //      /  \
+      //    7     9
+
+      assert.equal(node.left.value.value, 1);
+      assert.equal(node.right.value.value, 8);
+      assert.equal(node.right.left.value.value, 7);
+      assert.equal(node.right.right.value.value, 9);
+    });
   });
 });
