@@ -30,46 +30,25 @@ class Node {
   }
 
   delete(value) {
-    console.log(value);
     if (this.value === value) {
       // current node
       if (this.left || this.right) {
         // has at least one child
         if (this.left && this.right) {
           // has two children (damn)
-          // swap out node with largest from left subtree (or smallest from right)
           this.deleteWithTwoChildren();
         } else {
           // has only one child, so bypass it
           if (this.right) {
             // swap with smallest from right
-            const smallestNodeParent = this.getSmallestNodeParent();
-            if (smallestNodeParent.left === null) {
-              // no other children so just swap left node
-              this.value = this.left.value;
-              this.left = null;
-            } else {
-              this.value = smallestNodeParent.left.value;
-
-              // delete the largest node
-              smallestNodeParent.left = smallestNodeParent.left.right; // this will never be .left.left
-            }
+            this.deleteWithTwoChildren(undefined, "right");
           } else {
             // swap with largest from the left
-            const largestNodeParent = this.getLargestNodeParent();
-            if (largestNodeParent.right === null) {
-              // no other children so just swap left node
-              this.value = this.right.value;
-              this.right = null;
-            } else {
-              this.value = largestNodeParent.right.value;
-
-              // delete the largest node
-              largestNodeParent.right = largestNodeParent.right.left; // this will never be .right.right
-            }
+            this.deleteWithTwoChildren();
           }
         }
       } else {
+        // TODO fix this
         throw Error("This is the only node, it can't delete itself!");
       }
       return this;
@@ -80,12 +59,10 @@ class Node {
           // has at least one child
           if (this.left.left && this.left.right) {
             // has two children (damn)
-            // swap out node with largest from left subtree (or smallest from right)
             this.deleteWithTwoChildren(this.left);
           } else {
             // has only one child, so bypass it
-            const newNode = this.left.left || this.left.right;
-            this.left = newNode;
+            this.left = this.left.left || this.left.right;
           }
         } else {
           // no children so just delete it
@@ -102,12 +79,10 @@ class Node {
           // has at least one child
           if (this.right.left && this.right.right) {
             // has two children (damn)
-            // swap out node with largest from left subtree (or smallest from right)
             this.deleteWithTwoChildren(this.right);
           } else {
             // has only one child, so bypass it
-            const newNode = this.right.left || this.right.right;
-            this.right = newNode;
+            this.right = this.right.left || this.right.right;
           }
         } else {
           this.right = null;
@@ -121,16 +96,20 @@ class Node {
     return null;
   }
 
-  deleteWithTwoChildren(root = this) {
-    const largestNodeParent = root.left.getLargestNodeParent();
-    if (largestNodeParent.right === null) {
-      root.value = largestNodeParent.value;
-      root.left = null;
+  // swap out node with largest from left subtree (or smallest from right)
+  deleteWithTwoChildren(root = this,
+                        side = "left",
+                        otherSide = side === "left" ? "right" : "left",
+                        getNodeParent = side === "left" ? "getLargestNodeParent" : "getSmallestNodeParent") {
+    const nodeParent = root[side][getNodeParent]();
+    if (nodeParent[otherSide] === null) {
+      root.value = nodeParent.value;
+      root[side] = null;
     } else {
-      root.value = largestNodeParent.right.value;
+      root.value = nodeParent[otherSide].value;
 
       // delete the largest node
-      largestNodeParent.right = largestNodeParent.right.left; // this will never be .right.right
+      nodeParent[otherSide] = nodeParent[otherSide][side]; // this will never be .right.right
     }
   }
 

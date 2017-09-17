@@ -52,6 +52,20 @@ describe("BST", () => {
       assert.equal(node.contains(6), false);
     });
 
+    it("should get the parent of the smallest node", () => {
+      const node = new Node(8);
+      node.insert(3).insert(9).insert(1).insert(5).insert(12).insert(4).insert(11);
+      //        8
+      //      /   \
+      //    3      9
+      //  /   \     \
+      // 1     5    12
+      //      /     /
+      //     4     11
+
+      assert(node.getSmallestNodeParent().left.value, 1);
+    });
+
     it("should get the parent of the largest node", () => {
       const node = new Node(8);
       node.insert(3).insert(9).insert(1).insert(5).insert(12).insert(4).insert(11);
