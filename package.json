@@ -1,6 +1,6 @@
 {
-  "name": "bst",
-  "version": "0.0.1",
+  "name": "bst-js",
+  "version": "1.0.0",
   "description": "Binary Search Tree in Javascript",
   "main": "index.js",
   "scripts": {

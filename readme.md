@@ -4,7 +4,7 @@
 ## Usage
 
 ```js
-const Node = require("bst"); // not yet published to npm
+const Node = require("bst-js");
 // create a tree with the root node value of 5
 const tree = new Node(5);
 ```
