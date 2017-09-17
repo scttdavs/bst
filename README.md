@@ -92,13 +92,19 @@ tree.contains(10);
 // true
 ```
 
-### depthFirstLog
+### depthFirst
 Will execute a callback with each node's context bound to `this`.
 ```js
 const tree = new Node(5).insert(10).insert(1).insert(8).insert(7);
 
-tree.depthFirstLog(function() {
+tree.depthFirst(function() {
   console.log(this.value);
   // 5, 10, 1, 8, 7
 });
 ```
+
+## Possible additional features
+
+- rebalance after each insert/delete
+- allow for bulk insert/delete
+- depthFirst is just `preorder` by default now. Allow it to be that or `inorder` or `postorder`

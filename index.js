@@ -147,10 +147,10 @@ class Node {
                     this.right ? this.right.height(currentHeight) : currentHeight);
   }
 
-  depthFirstLog(callback) {
+  depthFirst(callback) {
     callback.call(this);
-    if (this.left) this.left.depthFirstLog(callback);
-    if (this.right) this.right.depthFirstLog(callback);
+    if (this.left) this.left.depthFirst(callback);
+    if (this.right) this.right.depthFirst(callback);
   }
 }
 

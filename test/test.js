@@ -305,7 +305,7 @@ describe("BST", () => {
     });
   });
 
-  describe("depthFirstLog", () => {
+  describe("depthFirst", () => {
     it("should log over each node in the tree", () => {
       const loggedValues = [];
       const node = new Node(5);
@@ -318,7 +318,7 @@ describe("BST", () => {
       //            /
       //          12
 
-      node.depthFirstLog(function() {
+      node.depthFirst(function() {
         loggedValues.push(this.value);
       });
       assert.deepEqual(loggedValues, [5, 1, 10, 9, 53, 12]);
