@@ -93,18 +93,22 @@ tree.contains(10);
 ```
 
 ### depthFirst
-Will execute a callback with each node's context bound to `this`.
+Will execute a callback with each node's context bound to `this` over a depthFirst `PREORDER` traversal (by default). It also supports `INORDER` and `POSTORDER` traversals.
 ```js
 const tree = new Node(5).insert(10).insert(1).insert(8).insert(7);
 
 tree.depthFirst(function() {
   console.log(this.value);
-  // 5, 10, 1, 8, 7
 });
+// 5, 10, 1, 8, 7
+
+tree.depthFirst(function() {
+  console.log(this.value);
+}, "inorder");
+// 1, 5, 7, 8, 10
 ```
 
 ## Possible additional features
 
 - rebalance after each insert/delete
 - allow for bulk insert/delete
-- depthFirst is just `preorder` by default now. Allow it to be that or `inorder` or `postorder`

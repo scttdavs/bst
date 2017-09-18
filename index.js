@@ -2,6 +2,22 @@
 
 const defaultComparator = (x, y) => x - y;
 
+const D = function(callback) {
+  callback.call(this);
+};
+const L = function(callback, orderName) {
+  if (this.left) this.left.depthFirst(callback, orderName);
+};
+const R = function(callback, orderName) {
+  if (this.right) this.right.depthFirst(callback, orderName);
+};
+
+const depthFirstOrders = {
+  inorder: [L, D, R],
+  preorder: [D, L, R],
+  postorder: [L, R, D]
+}
+
 class Node {
   constructor(value = null,
               comparator = defaultComparator) {
@@ -144,10 +160,10 @@ class Node {
                     this.right ? this.right.height(currentHeight) : currentHeight);
   }
 
-  depthFirst(callback) {
-    callback.call(this);
-    if (this.left) this.left.depthFirst(callback);
-    if (this.right) this.right.depthFirst(callback);
+  depthFirst(callback, orderName = "preorder") {
+    const order = depthFirstOrders[orderName.toLowerCase()];
+
+    if (order) order.forEach((o) => o.call(this, callback, orderName));
   }
 }
 

@@ -306,22 +306,58 @@ describe("BST", () => {
   });
 
   describe("depthFirst", () => {
-    it("should log over each node in the tree", () => {
+    it("should log over each node in the tree in PREORDER", () => {
       const loggedValues = [];
       const node = new Node(5);
-      node.insert(10).insert(1).insert(9).insert(53).insert(12);
+      node.insert(10).insert(1).insert(0).insert(4).insert(9).insert(53).insert(12);
       //        5
       //      /   \
       //    1      10
-      //          / \
-      //        9   53
+      //   / \    / \
+      //  0  4   9  53
       //            /
       //          12
 
       node.depthFirst(function() {
         loggedValues.push(this.value);
       });
-      assert.deepEqual(loggedValues, [5, 1, 10, 9, 53, 12]);
+      assert.deepEqual(loggedValues, [5, 1, 0, 4, 10, 9, 53, 12]);
+    });
+
+    it("should log over each node in the tree in INORDER", () => {
+      const loggedValues = [];
+      const node = new Node(5);
+      node.insert(10).insert(1).insert(0).insert(4).insert(9).insert(53).insert(12);
+      //        5
+      //      /   \
+      //    1      10
+      //   / \    / \
+      //  0  4   9  53
+      //            /
+      //          12
+
+      node.depthFirst(function() {
+        loggedValues.push(this.value);
+      }, "inorder");
+      assert.deepEqual(loggedValues, [0, 1, 4, 5, 9, 10, 12, 53]);
+    });
+
+    it("should log over each node in the tree in POSTORDER", () => {
+      const loggedValues = [];
+      const node = new Node(5);
+      node.insert(10).insert(1).insert(0).insert(4).insert(9).insert(53).insert(12);
+      //        5
+      //      /   \
+      //    1      10
+      //   / \    / \
+      //  0  4   9  53
+      //            /
+      //          12
+
+      node.depthFirst(function() {
+        loggedValues.push(this.value);
+      }, "postorder");
+      assert.deepEqual(loggedValues, [0, 4, 1, 9, 12, 53, 10, 5]);
     });
   });
 });
