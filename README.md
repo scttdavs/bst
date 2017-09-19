@@ -108,8 +108,25 @@ tree.depthFirst(function() {
 // 1, 5, 7, 8, 10
 ```
 
+### breadthFirst
+Will execute a callback with each node's context bound to `this` over a breadthFirst traversal.
+```js
+const tree = new Node(5).insert(10).insert(1).insert(0).insert(8).insert(7);
+//        5
+//      /   \
+//    1      10
+//   /      /
+//  0      8
+//        /
+//       7
+
+tree.breadthFirst(function() {
+  console.log(this.value);
+});
+// 5, 1, 10, 0, 8, 7
+```
+
 ## Possible additional features
 
 - rebalance after each insert/delete
 - allow for bulk insert/delete
-- add breadthFirst traversal

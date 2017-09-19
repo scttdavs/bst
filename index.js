@@ -12,6 +12,12 @@ const R = function(callback, orderName) {
   if (this.right) this.right.depthFirst(callback, orderName);
 };
 
+const processBreadthFirstNode = function(callback, queue) {
+  callback.call(this);
+  if (this.left) queue.push(this.left);
+  if (this.right) queue.push(this.right);
+};
+
 const depthFirstOrders = {
   inorder: [L, D, R],
   preorder: [D, L, R],
@@ -166,6 +172,17 @@ class Node {
     const order = depthFirstOrders[orderName.toLowerCase()];
 
     if (order) order.forEach((o) => o.call(this, callback, orderName));
+  }
+
+  breadthFirst(callback) {
+    const queue = [];
+
+    processBreadthFirstNode.call(this, callback, queue);
+
+    while(queue.length) {
+      const node = queue.shift();
+      processBreadthFirstNode.call(node, callback, queue);
+    }
   }
 }
 

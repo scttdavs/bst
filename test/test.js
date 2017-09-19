@@ -360,4 +360,24 @@ describe("BST", () => {
       assert.deepEqual(loggedValues, [0, 4, 1, 9, 12, 53, 10, 5]);
     });
   });
+
+  describe("breadthFirst", () => {
+    it("should log over each node in the tree in order by level", () => {
+      const loggedValues = [];
+      const node = new Node(5);
+      node.insert(10).insert(1).insert(0).insert(4).insert(9).insert(53).insert(12);
+      //        5
+      //      /   \
+      //    1      10
+      //   / \    / \
+      //  0  4   9  53
+      //            /
+      //          12
+
+      node.breadthFirst(function() {
+        loggedValues.push(this.value);
+      });
+      assert.deepEqual(loggedValues, [5, 1, 10, 0, 4, 9, 53, 12]);
+    });
+  });
 });
