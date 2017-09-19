@@ -53,19 +53,21 @@ class Node {
   delete(value, root = this) {
     if (this.compare(value, this.value) === 0) {
       // current node
+      // only gets hit if it is the root node as we always
+      // delete from the parent node in other cases
       if (this.left || this.right) {
         // has at least one child
         if (this.left && this.right) {
           // has two children (damn)
-          this.deleteWithTwoChildren();
+          this.deleteBySwapping();
         } else {
           // has only one child, so bypass it
           if (this.right) {
             // swap with smallest from right
-            this.deleteWithTwoChildren(undefined, "right");
+            this.deleteBySwapping(undefined, "right");
           } else {
             // swap with largest from the left
-            this.deleteWithTwoChildren();
+            this.deleteBySwapping();
           }
         }
       } else {
@@ -88,7 +90,7 @@ class Node {
         // has at least one child
         if (this[branch].left && this[branch].right) {
           // has two children (damn)
-          this.deleteWithTwoChildren(this[branch]);
+          this.deleteBySwapping(this[branch]);
         } else {
           // has only one child, so bypass it
           this[branch] = this[branch].left || this[branch].right;
@@ -104,10 +106,10 @@ class Node {
   }
 
   // swap out node with largest from left subtree (or smallest from right)
-  deleteWithTwoChildren(root = this,
-                        side = "left",
-                        otherSide = side === "left" ? "right" : "left",
-                        getNodeParent = side === "left" ? "getLargestNodeParent" : "getSmallestNodeParent") {
+  deleteBySwapping(root = this,
+                   side = "left",
+                   otherSide = side === "left" ? "right" : "left",
+                   getNodeParent = side === "left" ? "getLargestNodeParent" : "getSmallestNodeParent") {
     const nodeParent = root[side][getNodeParent]();
     if (nodeParent[otherSide] === null) {
       // did not contain a larger or smaller child, so swap with the parent instead
