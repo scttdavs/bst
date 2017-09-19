@@ -112,3 +112,4 @@ tree.depthFirst(function() {
 
 - rebalance after each insert/delete
 - allow for bulk insert/delete
+- add breadthFirst traversal
