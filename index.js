@@ -24,6 +24,97 @@ const depthFirstOrders = {
   postorder: [L, R, D]
 }
 
+const insertValue = function(value) {
+  if (this.compare(value, this.value) < 0) {
+    // left node
+    if (!this.left) return this.left = new Node(value, this.compare);
+
+    return this.left.insert(value);
+  } else if (this.compare(value, this.value) > 0) {
+    // right node
+    if (!this.right) return this.right = new Node(value, this.compare);
+
+    return this.right.insert(value);
+  }
+
+  // the value is equal, so do nothing
+  return null;
+};
+
+const deleteValue = function(value) {
+  if (this.compare(value, this.value) === 0) {
+    // current node
+    // only gets hit if it is the root node as we always
+    // delete from the parent node in other cases
+    if (this.left || this.right) {
+      // has at least one child
+      if (this.left && this.right) {
+        // has two children (damn)
+        deleteBySwapping.call(this);
+      } else {
+        // has only one child, so bypass it
+        if (this.right) {
+          // swap with smallest from right
+          deleteBySwapping.call(this, undefined, "right");
+        } else {
+          // swap with largest from the left
+          deleteBySwapping.call(this);
+        }
+      }
+    } else {
+      this.value = null;
+      // throw Error("This is the only node, it can't delete itself!");
+    }
+    return;
+  } else if (this.compare(value, this.value) < 0) {
+    // left node
+    return deleteFromBranch.call(this, "left", value);
+  } else {
+    // right node
+    return deleteFromBranch.call(this, "right", value);
+  }
+};
+
+const deleteFromBranch = function(branch, value) {
+  if (this.compare(this[branch].value, value) === 0) {
+    if (this[branch].left || this[branch].right) {
+      // has at least one child
+      if (this[branch].left && this[branch].right) {
+        // has two children (damn)
+        deleteBySwapping.call(this, this[branch]);
+      } else {
+        // has only one child, so bypass it
+        this[branch] = this[branch].left || this[branch].right;
+      }
+    } else {
+      // no children so just delete it
+      this[branch] = null;
+    }
+    return;
+  }
+
+  return this[branch].delete(value);
+};
+
+// swap out node with largest from left subtree (or smallest from right)
+const deleteBySwapping = function(root = this,
+                                  side = "left",
+                                  otherSide = side === "left" ? "right" : "left",
+                                  getNodeParent = side === "left" ? "getLargestNodeParent" : "getSmallestNodeParent") {
+  const nodeParent = root[side][getNodeParent]();
+  if (nodeParent[otherSide] === null) {
+    // did not contain a larger or smaller child, so swap with the parent instead
+    root.value = nodeParent.value;
+    // then delete it
+    root[side] = null;
+  } else {
+    root.value = nodeParent[otherSide].value;
+
+    // delete the largest node
+    nodeParent[otherSide] = nodeParent[otherSide][side];
+  }
+}
+
 class Node {
   constructor(value = null,
               comparator = defaultComparator) {
@@ -33,101 +124,14 @@ class Node {
     this.value = value;
   }
 
-  insert(value, root = this) {
-    if (this.compare(value, this.value) < 0) {
-      // left node
-      if (!this.left) {
-        this.left = new Node(value, this.compare);
-        return root;
-      }
-
-      return this.left.insert(value, root);
-    } else if (this.compare(value, this.value) > 0) {
-      // right node
-      if (!this.right) {
-        this.right = new Node(value, this.compare);
-        return root;
-      }
-
-      return this.right.insert(value, root);
-    }
-
-    // the value is equal, so do nothing
-    return null;
+  insert(...values) {
+    values.forEach(insertValue.bind(this));
+    return this;
   }
 
-  delete(value, root = this) {
-    if (this.compare(value, this.value) === 0) {
-      // current node
-      // only gets hit if it is the root node as we always
-      // delete from the parent node in other cases
-      if (this.left || this.right) {
-        // has at least one child
-        if (this.left && this.right) {
-          // has two children (damn)
-          this.deleteBySwapping();
-        } else {
-          // has only one child, so bypass it
-          if (this.right) {
-            // swap with smallest from right
-            this.deleteBySwapping(undefined, "right");
-          } else {
-            // swap with largest from the left
-            this.deleteBySwapping();
-          }
-        }
-      } else {
-        this.value = null;
-        // throw Error("This is the only node, it can't delete itself!");
-      }
-      return root;
-    } else if (this.compare(value, this.value) < 0) {
-      // left node
-      return this.deleteFromBranch("left", value, root);
-    } else {
-      // right node
-      return this.deleteFromBranch("right", value, root);
-    }
-  }
-
-  deleteFromBranch(branch, value, root = this) {
-    if (this.compare(this[branch].value, value) === 0) {
-      if (this[branch].left || this[branch].right) {
-        // has at least one child
-        if (this[branch].left && this[branch].right) {
-          // has two children (damn)
-          this.deleteBySwapping(this[branch]);
-        } else {
-          // has only one child, so bypass it
-          this[branch] = this[branch].left || this[branch].right;
-        }
-      } else {
-        // no children so just delete it
-        this[branch] = null;
-      }
-      return root;
-    }
-
-    return this[branch].delete(value, root);
-  }
-
-  // swap out node with largest from left subtree (or smallest from right)
-  deleteBySwapping(root = this,
-                   side = "left",
-                   otherSide = side === "left" ? "right" : "left",
-                   getNodeParent = side === "left" ? "getLargestNodeParent" : "getSmallestNodeParent") {
-    const nodeParent = root[side][getNodeParent]();
-    if (nodeParent[otherSide] === null) {
-      // did not contain a larger or smaller child, so swap with the parent instead
-      root.value = nodeParent.value;
-      // then delete it
-      root[side] = null;
-    } else {
-      root.value = nodeParent[otherSide].value;
-
-      // delete the largest node
-      nodeParent[otherSide] = nodeParent[otherSide][side];
-    }
+  delete(...values) {
+    values.forEach(deleteValue.bind(this));
+    return this;
   }
 
   getLargestNodeParent(currentLargest = this) {

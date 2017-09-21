@@ -128,5 +128,4 @@ tree.breadthFirst(function() {
 
 ## Possible additional features
 
-- rebalance after each insert/delete
 - allow for bulk insert/delete
