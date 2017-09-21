@@ -42,6 +42,16 @@ describe("BST", () => {
 
       assert.equal(node.size(), 3);
     });
+
+    it("should insert more than 1 value", () => {
+      const node = new Node(5);
+      const newValues = [10, 3, 1];
+      node.insert(...newValues);
+
+      assert.equal(node.contains(10), true);
+      assert.equal(node.size(), 4);
+      assert.equal(node.height(), 3);
+    });
   });
 
   describe("Delete", () => {
@@ -210,6 +220,33 @@ describe("BST", () => {
 
       assert.equal(node.size(), 1);
       assert.equal(node.value, null);
+    });
+
+    it("should delete more than 1 value", () => {
+      const node = new Node(5);
+      node.insert(10, 1, 6, 12);
+      //        5
+      //      /   \
+      //    1      10
+      //          /  \
+      //         6    12
+
+      assert.equal(node.contains(10), true);
+      assert.equal(node.contains(1), true);
+      assert.equal(node.size(), 5);
+
+      node.delete(...[1, 10]);
+      //        5
+      //          \
+      //           6
+      //            \
+      //            12
+
+      assert.equal(node.contains(10), false);
+      assert.equal(node.contains(1), false);
+      assert.equal(node.right.value, 6);
+      assert.equal(node.right.right.value, 12);
+      assert.equal(node.size(), 3);
     });
   });
 
