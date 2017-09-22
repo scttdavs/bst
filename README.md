@@ -3,6 +3,11 @@
 
 ## Usage
 
+Install from NPM:
+```sh
+npm i bst-js
+```
+
 ```js
 const Node = require("bst-js");
 // create a tree with the root node value of 5
