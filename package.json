@@ -4,7 +4,8 @@
   "description": "Binary Search Tree in Javascript",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha",
+    "report": "node ./node_modules/nyc/bin/nyc.js mocha && node ./node_modules/nyc/bin/nyc.js report"
   },
   "repository": {
     "type": "git",
