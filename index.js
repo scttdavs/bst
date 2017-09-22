@@ -1,5 +1,6 @@
 "use strict";
 
+// NON PUBLIC METHODS BELOW
 const defaultComparator = (x, y) => x - y;
 
 const D = function(callback) {
@@ -100,8 +101,8 @@ const deleteFromBranch = function(branch, value) {
 const deleteBySwapping = function(root = this,
                                   side = "left",
                                   otherSide = side === "left" ? "right" : "left",
-                                  getNodeParent = side === "left" ? "getLargestNodeParent" : "getSmallestNodeParent") {
-  const nodeParent = root[side][getNodeParent]();
+                                  getNodeParent = side === "left" ? getLargestNodeParent : getSmallestNodeParent) {
+  const nodeParent = getNodeParent(root[side]);
   if (nodeParent[otherSide] === null) {
     // did not contain a larger or smaller child, so swap with the parent instead
     root.value = nodeParent.value;
@@ -113,8 +114,17 @@ const deleteBySwapping = function(root = this,
     // delete the largest node
     nodeParent[otherSide] = nodeParent[otherSide][side];
   }
-}
+};
 
+const getLargestNodeParent = function(node, currentLargest = node) {
+  return node.right ? getLargestNodeParent(node.right, currentLargest) : currentLargest;
+};
+
+const getSmallestNodeParent = function(node, currentSmallest = node) {
+  return node.left ? getSmallestNodeParent(node.left, currentLargest) : currentSmallest;
+};
+
+// NODE CLASS, ALL PUBLIC METHODS
 class Node {
   constructor(value = null,
               comparator = defaultComparator) {
@@ -132,14 +142,6 @@ class Node {
   delete(...values) {
     values.forEach(deleteValue.bind(this));
     return this;
-  }
-
-  getLargestNodeParent(currentLargest = this) {
-    return this.right ? this.right.getLargestNodeParent(this) : currentLargest;
-  }
-
-  getSmallestNodeParent(currentSmallest = this) {
-    return this.left ? this.left.getSmallestNodeParent(this) : currentSmallest;
   }
 
   isBalanced() {
