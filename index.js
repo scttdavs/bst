@@ -109,6 +109,7 @@ const deleteBySwapping = function(root = this,
     // then delete it
     root[side] = null;
   } else {
+    // contains a smaller or larger child, so swap with it
     root.value = nodeParent[otherSide].value;
 
     // delete the largest node
