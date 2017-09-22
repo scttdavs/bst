@@ -35,6 +35,19 @@ const tree = new Node(9).insert(4);
 //     /
 //    4
 ```
+or insert many values at once.
+```js
+const tree = new Node(5);
+const newValues = [10, 1, 8, 7];
+tree.insert(...newValues); // or tree.insert(10, 1, 8, 7)
+//        5
+//      /   \
+//    1      10
+//          /
+//         8
+//        /
+//       7
+```
 
 ### delete
 Deletes a node with the given value.
@@ -48,6 +61,17 @@ const tree = new Node(5).insert(10).insert(1).insert(8).insert(7);
 //        /
 //       7
 tree.delete(10);
+//        5
+//      /   \
+//    1      8
+//          /
+//         7
+```
+or insert many values at once.
+```js
+const tree = new Node(5).insert(10, 1, 8, 7);
+const oldValues = [10, 1];
+tree.delete(...oldValues); // or tree.delete(10, 1)
 //        5
 //      /   \
 //    1      8
@@ -125,7 +149,3 @@ tree.breadthFirst(function() {
 });
 // 5, 1, 10, 0, 8, 7
 ```
-
-## Possible additional features
-
-- allow for bulk insert/delete
