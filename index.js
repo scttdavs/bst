@@ -169,6 +169,15 @@ class Node {
     return count + leftSize + rightSize;
   }
 
+  depth(value, currentHeight = 0) {
+    // handle root node
+    if (this.compare(value, this.value) === 0) return currentHeight;
+
+    currentHeight++;
+    return Math.max(this.left ? this.left.depth(value, currentHeight) : null,
+                    this.right ? this.right.depth(value, currentHeight) : null);
+  }
+
   height(currentHeight = 0) {
     currentHeight++;
     return Math.max(this.left ? this.left.height(currentHeight) : currentHeight,

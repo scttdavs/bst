@@ -103,6 +103,14 @@ tree.height();
 // 4
 ```
 
+### depth
+```js
+const tree = new Node(5).insert(10, 1, 8, 7);
+
+tree.depth(8);
+// 2
+```
+
 ### size
 Returns the total number of nodes in a tree or subtree.
 ```js

@@ -231,6 +231,31 @@ describe("BST", () => {
     });
   });
 
+  describe("Depth", () => {
+    it("should return 0 as the depth of the root node", () => {
+      const node = new Node(1).insert(4, 0);
+
+      assert.equal(node.depth(1), 0);
+    });
+
+    it("should return the number of edges between the root node and the current node", () => {
+      const node = new Node(5);
+      node.insert(10, 1, 9, 53, 12);
+      //        5
+      //      /   \
+      //    1      10
+      //          / \
+      //        9   53
+      //            /
+      //          12
+
+      assert.equal(node.depth(12), 3);
+      assert.equal(node.depth(9), 2);
+      assert.equal(node.depth(10), 1);
+      assert.equal(node.depth(1), 1);
+    });
+  });
+
   describe("Height", () => {
     it("should return the distance from a node to the root node", () => {
       const node = new Node(5);
