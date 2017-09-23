@@ -100,7 +100,7 @@ Returns the height of a given tree or subtree.
 const tree = new Node(5).insert(10).insert(1).insert(8).insert(7);
 
 tree.height();
-// 4
+// 3
 ```
 
 ### depth

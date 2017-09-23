@@ -50,7 +50,7 @@ describe("BST", () => {
 
       assert.equal(node.contains(10), true);
       assert.equal(node.size(), 4);
-      assert.equal(node.height(), 3);
+      assert.equal(node.height(), 2);
     });
   });
 
@@ -257,6 +257,12 @@ describe("BST", () => {
   });
 
   describe("Height", () => {
+    it("should return 0 as the height of just the root node", () => {
+      const node = new Node(1);
+
+      assert.equal(node.height(), 0);
+    });
+
     it("should return the distance from a node to the root node", () => {
       const node = new Node(5);
       node.insert(10).insert(1).insert(9).insert(53).insert(12);
@@ -268,7 +274,7 @@ describe("BST", () => {
       //            /
       //          12
 
-      assert.equal(node.height(), 4);
+      assert.equal(node.height(), 3);
     });
   });
 

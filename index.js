@@ -179,9 +179,8 @@ class Node {
   }
 
   height(currentHeight = 0) {
-    currentHeight++;
-    return Math.max(this.left ? this.left.height(currentHeight) : currentHeight,
-                    this.right ? this.right.height(currentHeight) : currentHeight);
+    return Math.max(this.left ? this.left.height(currentHeight + 1) : currentHeight,
+                    this.right ? this.right.height(currentHeight + 1) : currentHeight);
   }
 
   depthFirst(callback, orderName = "preorder") {
